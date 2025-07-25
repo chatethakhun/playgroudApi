@@ -1,6 +1,6 @@
 // middle for protected routes
 
-import User from "../models/User";
+import User from "../models/User.js";
 
 export const protectedRoute = async (req, res, next) => {
   const token = req.headers.authorization;
