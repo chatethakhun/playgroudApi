@@ -100,3 +100,21 @@ export const updateProfile = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+
+export const updateAvatar = async (req, res) => {
+  try {
+    const { avatar } = req.body;
+    const userId = req.user._id;
+
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { avatar },
+      { new: true },
+    );
+
+    res.status(200).json({ message: "Avatar updated successfully", user });
+  } catch (error) {
+    console.log(`error from updateAvatar: ${error.message}`);
+    res.status(400).json({ error: error.message });
+  }
+};

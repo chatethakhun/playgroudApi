@@ -4,6 +4,7 @@ import {
   login,
   updateProfile,
   checkAuth,
+  updateAvatar,
 } from "../controllers/userController.js";
 import { protectedRoute } from "../middleware/auth.js";
 
@@ -13,5 +14,6 @@ userRouter.post("/signup", signUp);
 userRouter.post("/login", login);
 userRouter.put("/update-profile", protectedRoute, updateProfile);
 userRouter.get("/me", protectedRoute, checkAuth);
+userRouter.patch("/update-avatar", protectedRoute, updateAvatar);
 
 export default userRouter;
