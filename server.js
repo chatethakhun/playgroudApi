@@ -3,10 +3,14 @@ import cors from "cors";
 import { connectDb } from "./libs/mongoose.js";
 import http from "http";
 import "dotenv/config";
-import userRouter from "./routes/userRoutes.js";
+
 import { Server } from "socket.io";
 const app = express();
 const server = http.createServer(app);
+
+import userRouter from "./routes/userRoutes.js";
+import uploadRouter from "./routes/uploadRoutes.js";
+import messageRouter from "./routes/messageRoutes.js";
 
 // initial socket connection
 export const io = new Server(server, {
@@ -45,6 +49,8 @@ app.use("/api/status", (req, res) => {
 });
 
 app.use("/api/auth", userRouter);
+app.use("/api/file", uploadRouter);
+app.use("/api/message", messageRouter);
 
 await connectDb();
 
