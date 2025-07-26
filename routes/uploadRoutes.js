@@ -1,11 +1,12 @@
 import express from "express";
 import multer from "multer";
+import cloudinary from "cloudinary";
 const uploadRouter = express.Router();
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-uploadRouter.post("/upload", upload.single("image"), (req, res) => {
+uploadRouter.post("/upload", upload.single("file"), (req, res) => {
   if (!req.file) {
     return res.status(400).json({ error: "No file uploaded" });
   }
