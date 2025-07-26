@@ -1,7 +1,7 @@
 // middle for protected routes
 
 import User from "../models/User.js";
-
+import jwt from "jsonwebtoken";
 export const protectedRoute = async (req, res, next) => {
   const token = req.headers.authorization;
 
@@ -11,6 +11,7 @@ export const protectedRoute = async (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
     const user = await User.findById(decoded.userId).select("-password");
     if (!user) {
       return res.status(401).json({ error: "Invalid token" });
