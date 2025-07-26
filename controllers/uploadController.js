@@ -1,5 +1,6 @@
 import cloudinary from "../libs/cloudinary.js";
-
+const storage = multer.memoryStorage();
+const uploadMulter = multer({ storage: storage });
 export const upload = async (req, res) => {
   try {
     const { file } = req.body;
