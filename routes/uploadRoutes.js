@@ -1,28 +1,41 @@
 import express from "express";
 import multer from "multer";
-import cloudinary from "../libs/cloudinary.js";
-const uploadRouter = express.Router();
+import { v2 as cloudinary } from "cloudinary";
+import streamifier from "streamifier";
 
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
+const uploadRouter = express.Router();
+const upload = multer({ storage: multer.memoryStorage() });
 
 uploadRouter.post("/upload", upload.single("file"), (req, res) => {
   if (!req.file) {
     return res.status(400).json({ error: "No file uploaded" });
   }
 
-  cloudinary.uploader
-    .upload_stream({ resource_type: "auto" }, (error, result) => {
+  const stream = cloudinary.uploader.upload_stream(
+    { resource_type: "auto" },
+    (error, result) => {
       if (error) {
-        console.log(error);
-        return res.status(500).json({ error: "Error uploading to Cloudinary" });
+        console.error("❌ Cloudinary error:", error);
+        return res.status(500).json({ error: "Cloudinary upload failed" });
       }
-      console.log("finished uploading");
-      return res
-        .status(200)
-        .json({ public_id: result.public_id, url: result.secure_url });
-    })
-    .end(req.file.buffer);
+
+      if (!result) {
+        return res.status(500).json({ error: "No result from Cloudinary" });
+      }
+
+      return res.status(200).json({
+        public_id: result.public_id,
+        url: result.secure_url,
+      });
+    },
+  );
+
+  try {
+    streamifier.createReadStream(req.file.buffer).pipe(stream);
+  } catch (err) {
+    console.error("❌ Streamifier error:", err);
+    return res.status(500).json({ error: "Stream processing failed" });
+  }
 });
 
 export default uploadRouter;
