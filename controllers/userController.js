@@ -81,11 +81,9 @@ export const updateProfile = async (req, res) => {
         { new: true },
       );
     } else {
-      const uploadAvatar = await cloudinary.uploader.upload(avatar);
-
       updatedUser = await User.findByIdAndUpdate(
         userId,
-        { fullName, bio, avatar: uploadAvatar.secure_url },
+        { fullName, bio, avatar },
         { new: true },
       );
     }
