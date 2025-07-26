@@ -1,6 +1,6 @@
 import express from "express";
 import multer from "multer";
-import cloudinary from "cloudinary";
+import cloudinary from "../libs/cloudinary.js";
 const uploadRouter = express.Router();
 
 const storage = multer.memoryStorage();
