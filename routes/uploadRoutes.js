@@ -17,7 +17,7 @@ uploadRouter.post("/upload", upload.single("file"), (req, res) => {
         console.log(error);
         return res.status(500).json({ error: "Error uploading to Cloudinary" });
       }
-      res.json({ public_id: result.public_id, url: result.secure_url });
+      return res.json({ public_id: result.public_id, url: result.secure_url });
     })
     .end(req.file.buffer);
 });
