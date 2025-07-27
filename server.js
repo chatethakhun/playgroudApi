@@ -47,7 +47,7 @@ io.on("connection", (socket) => {
 app.use(express.json({ limit: "4mb" }));
 app.use(
   cors({
-    origin: "https://playground-fe-xi.vercel.app",
+    origin: "*",
     headers: ["Content-Type"],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
