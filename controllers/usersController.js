@@ -4,7 +4,6 @@ import User from "../models/User.js";
 export const getUsers = async (req, res) => {
   try {
     // find all users and filter me current user
-    console.log({ req: req });
     const userId = req.user._id;
     const unseenMessages = {};
     const users = await User.find({ _id: { $ne: userId } }).select("-password");
