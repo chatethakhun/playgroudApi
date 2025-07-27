@@ -44,7 +44,7 @@ io.on("connection", (socket) => {
 });
 
 app.use(express.json({ limit: "4mb" }));
-app.use(cors());
+app.use(cors({ origin: "*", credentials: true }));
 
 app.use("/api/status", (req, res) => {
   res.send("Hello World!");
