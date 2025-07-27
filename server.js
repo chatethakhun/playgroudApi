@@ -16,11 +16,13 @@ import messageRouter from "./routes/messageRoutes.js";
 export const io = new Server(server, {
   cors: {
     origin: "*",
+    methods: ["GET", "POST"],
   },
 });
 
 // Store online
 export const userSocketMap = {}; // { userId : socketId }
+// SOCKET.IO HANDLER
 
 // Socket io handler
 io.on("connection", (socket) => {
@@ -55,7 +57,7 @@ app.use("/api/message", messageRouter);
 await connectDb();
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
 
