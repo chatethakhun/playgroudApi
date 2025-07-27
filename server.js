@@ -49,6 +49,8 @@ app.use(
     origin: "https://playground-fe-xi.vercel.app",
     headers: ["Content-Type"],
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   }),
 );
 
