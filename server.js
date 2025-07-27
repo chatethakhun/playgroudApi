@@ -11,6 +11,7 @@ const server = http.createServer(app);
 import userRouter from "./routes/userRoutes.js";
 import uploadRouter from "./routes/uploadRoutes.js";
 import messageRouter from "./routes/messageRoutes.js";
+import usersRouter from "./routes/usersRoutes.js";
 
 // initial socket connection
 export const io = new Server(server, {
@@ -61,6 +62,7 @@ app.use("/api/status", (req, res) => {
 app.use("/api/auth", userRouter);
 app.use("/api/file", uploadRouter);
 app.use("/api/message", messageRouter);
+app.use("/api/users", usersRouter);
 
 await connectDb();
 

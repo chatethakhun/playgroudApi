@@ -9,11 +9,12 @@ import {
 import { protectedRoute } from "../middleware/auth.js";
 
 const userRouter = express.Router();
+userRouter.get("/me", protectedRoute, checkAuth);
 
 userRouter.post("/signup", signUp);
 userRouter.post("/login", login);
 userRouter.put("/update-profile", protectedRoute, updateProfile);
-userRouter.get("/me", protectedRoute, checkAuth);
+
 userRouter.patch("/update-avatar", protectedRoute, updateAvatar);
 
 // comment
