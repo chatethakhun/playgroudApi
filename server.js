@@ -52,6 +52,8 @@ app.use(
   }),
 );
 
+app.options("*", cors());
+
 app.use("/api/status", (req, res) => {
   res.send("Hello World!");
 });
