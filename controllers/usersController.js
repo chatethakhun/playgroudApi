@@ -16,7 +16,10 @@ export const getUsers = async (req, res) => {
         seen: false,
       }).sort({ createdAt: -1 });
       if (messages.length > 0) {
-        unseenMessages[user._id] = messages;
+        unseenMessages[user._id] = {
+          unreadMessages: messages.length,
+          lastMessage: messages[0],
+        };
       }
     });
 
