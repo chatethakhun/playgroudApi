@@ -16,4 +16,5 @@ userRouter.put("/update-profile", protectedRoute, updateProfile);
 userRouter.get("/me", protectedRoute, checkAuth);
 userRouter.patch("/update-avatar", protectedRoute, updateAvatar);
 
+// comment
 export default userRouter;
