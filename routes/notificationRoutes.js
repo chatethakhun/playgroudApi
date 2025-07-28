@@ -8,6 +8,6 @@ import { protectedRoute } from "../middleware/auth.js";
 const notificationRouter = express.Router();
 
 notificationRouter.get("/", protectedRoute, getNotifications);
-notificationRouter.post("/mark-read", protectedRoute, markReadNotification);
+notificationRouter.post("/mark-read/:id", protectedRoute, markReadNotification);
 
 export default notificationRouter;

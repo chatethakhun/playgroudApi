@@ -10,7 +10,7 @@ const getNotifications = async (req, res) => {
 const markReadNotification = async (req, res) => {
   try {
     const userId = req.user.id;
-    const notificationId = req.body.notificationId;
+    const { id: notificationId } = req.params;
 
     await Notification.updateOne(
       { _id: notificationId, userId },
