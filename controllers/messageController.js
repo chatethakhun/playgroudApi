@@ -67,8 +67,13 @@ export const sendMessage = async (req, res) => {
 
     // emit message to user in socket for update chat list
     Object.values(userSocketMap).forEach(async (socketId) => {
+      const userId = Object.keys(userSocketMap).find(
+        (key) => userSocketMap[key] === socketId,
+      );
+
       const { users, unseenMessages } =
-        await getUsersWithUnseenMessages(socketId);
+        await getUsersWithUnseenMessages(userId);
+
       io.to(socketId).emit("chatListUpdate", { users, unseenMessages });
     });
 
