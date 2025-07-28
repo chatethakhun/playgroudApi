@@ -1,6 +1,7 @@
 import WS_EVENT from "../constant/wsEvent.js";
 import cloudinary from "../libs/cloudinary.js";
 import Message from "../models/Message.js";
+import Notification from "../models/Notification.js";
 import { io, userSocketMap } from "../server.js";
 import { getUsersWithUnseenMessages } from "../utils/users.js";
 // get all Messages for a user
@@ -51,6 +52,7 @@ export const sendMessage = async (req, res) => {
 
     let imageUrl;
     if (!!image) {
+      // receive image from client by blob base 64
       const uploadImage = await cloudinary.uploader.upload(image);
       imageUrl = uploadImage.secure_url;
     }
@@ -64,8 +66,16 @@ export const sendMessage = async (req, res) => {
 
     // // emit message to receiver
     const recieverSocketId = userSocketMap[receiverId];
-    if (recieverSocketId)
+
+    if (recieverSocketId) {
+      const notification = await Notification.create({
+        userId: receiverId,
+        read: false,
+        message: message.text,
+      });
       io.to(recieverSocketId).emit(WS_EVENT.NEW_MESSAGE, message);
+      io.to(recieverSocketId).emit(WS_EVENT.NEW_NOTIFICATION, notification);
+    }
 
     // emit message to user in socket for update chat list
     Object.values(userSocketMap).forEach(async (socketId) => {
