@@ -1,3 +1,4 @@
+import WS_EVENT from "../constant/wsEvent.js";
 import cloudinary from "../libs/cloudinary.js";
 import Message from "../models/Message.js";
 import { io, userSocketMap } from "../server.js";
@@ -63,7 +64,8 @@ export const sendMessage = async (req, res) => {
 
     // // emit message to receiver
     const recieverSocketId = userSocketMap[receiverId];
-    if (recieverSocketId) io.to(recieverSocketId).emit("newMessage", message);
+    if (recieverSocketId)
+      io.to(recieverSocketId).emit(WS_EVENT.NEW_MESSAGE, message);
 
     // emit message to user in socket for update chat list
     Object.values(userSocketMap).forEach(async (socketId) => {
@@ -74,7 +76,10 @@ export const sendMessage = async (req, res) => {
       const { users, unseenMessages } =
         await getUsersWithUnseenMessages(userId);
 
-      io.to(socketId).emit("chatListUpdate", { users, unseenMessages });
+      io.to(socketId).emit(WS_EVENT.CHAT_LIST_UPDATE, {
+        users,
+        unseenMessages,
+      });
     });
 
     res.status(200).json({ message: "Message sent", message });

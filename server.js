@@ -12,6 +12,7 @@ import userRouter from "./routes/userRoutes.js";
 import uploadRouter from "./routes/uploadRoutes.js";
 import messageRouter from "./routes/messageRoutes.js";
 import usersRouter from "./routes/usersRoutes.js";
+import WS_EVENT from "./constant/wsEvent.js";
 
 // initial socket connection
 export const io = new Server(server, {
@@ -34,13 +35,13 @@ io.on("connection", (socket) => {
   if (userId) userSocketMap[userId] = socket.id;
 
   // Emit online user to all connected client
-  io.emit("getOnlineUsers", Object.keys(userSocketMap));
+  io.emit(WS_EVENT.GET_ONLINE_USERS, Object.keys(userSocketMap));
 
   socket.on("disconnect", () => {
     console.log("Socket disconnected");
     // Store offline
     delete userSocketMap[socket.id];
-    io.emit("getOnlineUsers", Object.keys(userSocketMap));
+    io.emit(WS_EVENT.GET_ONLINE_USERS, Object.keys(userSocketMap));
   });
 });
 
