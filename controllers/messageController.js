@@ -60,9 +60,14 @@ export const sendMessage = async (req, res) => {
       image: imageUrl,
     });
 
-    // emit message to receiver
-    const recieverSocketId = userSocketMap[receiverId];
-    if (recieverSocketId) io.to(recieverSocketId).emit("newMessage", message);
+    // // emit message to receiver
+    // const recieverSocketId = userSocketMap[receiverId];
+    // if (recieverSocketId) io.to(recieverSocketId).emit("newMessage", message);
+
+    // emit message to user in socket for update chat list
+    Object.values(userSocketMap).forEach((socketId) => {
+      io.to(socketId).emit("newMessage", message);
+    });
 
     res.status(200).json({ message: "Message sent", message });
   } catch (error) {
