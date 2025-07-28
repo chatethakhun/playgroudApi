@@ -1,6 +1,7 @@
 import cloudinary from "../libs/cloudinary.js";
 import Message from "../models/Message.js";
 import { io, userSocketMap } from "../server.js";
+import { getUsersWithUnseenMessages } from "../utils/users.js";
 // get all Messages for a user
 export const getMessages = async (req, res) => {
   try {
@@ -61,12 +62,14 @@ export const sendMessage = async (req, res) => {
     });
 
     // // emit message to receiver
-    // const recieverSocketId = userSocketMap[receiverId];
-    // if (recieverSocketId) io.to(recieverSocketId).emit("newMessage", message);
+    const recieverSocketId = userSocketMap[receiverId];
+    if (recieverSocketId) io.to(recieverSocketId).emit("newMessage", message);
 
     // emit message to user in socket for update chat list
-    Object.values(userSocketMap).forEach((socketId) => {
-      io.to(socketId).emit("newMessage", message);
+    Object.values(userSocketMap).forEach(async (socketId) => {
+      const { users, unseenMessages } =
+        await getUsersWithUnseenMessages(socketId);
+      io.to(socketId).emit("chatListUpdate", { users, unseenMessages });
     });
 
     res.status(200).json({ message: "Message sent", message });
