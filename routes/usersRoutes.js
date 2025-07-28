@@ -4,6 +4,6 @@ import { protectedRoute } from "../middleware/auth.js";
 
 const usersRouter = express.Router();
 
-usersRouter.get("/all", protectedRoute, getUsers);
+usersRouter.get("/", protectedRoute, getUsers);
 
 export default usersRouter;
