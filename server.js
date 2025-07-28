@@ -12,6 +12,7 @@ import userRouter from "./routes/userRoutes.js";
 import uploadRouter from "./routes/uploadRoutes.js";
 import messageRouter from "./routes/messageRoutes.js";
 import usersRouter from "./routes/usersRoutes.js";
+import notificationRouter from "./routes/notificationRoutes.js";
 import WS_EVENT from "./constant/wsEvent.js";
 
 // initial socket connection
@@ -64,6 +65,7 @@ app.use("/api/auth", userRouter);
 app.use("/api/file", uploadRouter);
 app.use("/api/message", messageRouter);
 app.use("/api/users", usersRouter);
+app.use("/api/notification", notificationRouter);
 
 await connectDb();
 
