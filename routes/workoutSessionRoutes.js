@@ -9,7 +9,7 @@ import { protectedRoute } from "../middleware/auth.js";
 
 const workoutRouter = express.Router();
 
-workoutRouter.get("/list", getListWorkoutSession);
+workoutRouter.get("/list", protectedRoute, getListWorkoutSession);
 workoutRouter.post("/start", protectedRoute, startWorkoutSession);
 workoutRouter.put("/end/:id", protectedRoute, endWorkoutSession);
 workoutRouter.delete("/end/:id", protectedRoute, deleteWorkoutSession);
