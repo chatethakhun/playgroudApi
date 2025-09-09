@@ -14,6 +14,7 @@ import messageRouter from "./routes/messageRoutes.js";
 import usersRouter from "./routes/usersRoutes.js";
 import notificationRouter from "./routes/notificationRoutes.js";
 import WS_EVENT from "./constant/wsEvent.js";
+import workoutRouter from "./routes/workoutSessionRoutes.js";
 
 // initial socket connection
 export const io = new Server(server, {
@@ -66,6 +67,7 @@ app.use("/api/file", uploadRouter);
 app.use("/api/message", messageRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/notification", notificationRouter);
+app.use("/api/workout-session", workoutRouter);
 
 await connectDb();
 

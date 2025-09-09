@@ -1,0 +1,31 @@
+import mongoose from "mongoose";
+
+const workoutSessionSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    require: true,
+  },
+  focus: {
+    type: String,
+    require: false,
+  },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
+  startedAt: {
+    type: Date,
+    required: true,
+  },
+  endedAt: {
+    type: Date,
+    required: false,
+  },
+  notes: {
+    type: String,
+    required: false,
+  },
+});
+
+export default mongoose.model("WorkoutSession", workoutSessionSchema);
