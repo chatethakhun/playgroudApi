@@ -1,6 +1,6 @@
 import WorkoutSession from "../models/WorkoutSession.js";
 
-const getListWorkoutSession = async (req, res) => {
+export const getListWorkoutSession = async (req, res) => {
   try {
     const { isCompleted } = req.query;
 
@@ -26,7 +26,7 @@ const getListWorkoutSession = async (req, res) => {
   }
 };
 
-const startWorkoutSession = async (req, res) => {
+export const startWorkoutSession = async (req, res) => {
   try {
     const workoutSession = await new WorkoutSession({
       userId: req.user.id,
@@ -43,7 +43,7 @@ const startWorkoutSession = async (req, res) => {
   }
 };
 
-const endWorkoutSession = async (req, res) => {
+export const endWorkoutSession = async (req, res) => {
   try {
     const workoutSession = await WorkoutSession.findById(req.params.id);
 
@@ -63,7 +63,7 @@ const endWorkoutSession = async (req, res) => {
   }
 };
 
-const deleteWorkoutSession = async (req, res) => {
+export const deleteWorkoutSession = async (req, res) => {
   try {
     const workoutSession = await WorkoutSession.findById(req.params.id);
 
@@ -78,11 +78,4 @@ const deleteWorkoutSession = async (req, res) => {
   } catch (error) {
     res.status(500).send(error);
   }
-};
-
-export default {
-  getListWorkoutSession,
-  startWorkoutSession,
-  endWorkoutSession,
-  deleteWorkoutSession,
 };
