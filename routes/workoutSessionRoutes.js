@@ -12,6 +12,6 @@ const workoutRouter = express.Router();
 workoutRouter.get("/list", protectedRoute, getListWorkoutSession);
 workoutRouter.post("/start", protectedRoute, startWorkoutSession);
 workoutRouter.put("/end/:id", protectedRoute, endWorkoutSession);
-workoutRouter.delete("/end/:id", protectedRoute, deleteWorkoutSession);
+workoutRouter.delete("/:id", protectedRoute, deleteWorkoutSession);
 
 export default workoutRouter;
