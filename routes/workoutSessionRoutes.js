@@ -8,12 +8,12 @@ import {
 } from "../controllers/workoutSessionController.js";
 import { protectedRoute } from "../middleware/auth.js";
 
-const workoutRouter = express.Router();
+const workoutSessionRouter = express.Router();
 
-workoutRouter.get("/list", protectedRoute, getListWorkoutSession);
-workoutRouter.get("/:id", protectedRoute, getSingleWorkoutSession);
-workoutRouter.post("/start", protectedRoute, startWorkoutSession);
-workoutRouter.put("/end/:id", protectedRoute, endWorkoutSession);
-workoutRouter.delete("/:id", protectedRoute, deleteWorkoutSession);
+workoutSessionRouter.get("/list", protectedRoute, getListWorkoutSession);
+workoutSessionRouter.get("/:id", protectedRoute, getSingleWorkoutSession);
+workoutSessionRouter.post("/start", protectedRoute, startWorkoutSession);
+workoutSessionRouter.put("/end/:id", protectedRoute, endWorkoutSession);
+workoutSessionRouter.delete("/:id", protectedRoute, deleteWorkoutSession);
 
-export default workoutRouter;
+export default workoutSessionRouter;

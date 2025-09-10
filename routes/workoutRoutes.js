@@ -8,4 +8,4 @@ workOutRouter.get("/:id", workoutController.getSingleWorkout);
 workOutRouter.put("/:id", workoutController.updateWorkout);
 workOutRouter.delete("/:id", workoutController.deleteWorkout);
 
-module.exports = workOutRouter;
+export default workOutRouter;
