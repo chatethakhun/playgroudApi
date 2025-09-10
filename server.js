@@ -68,6 +68,7 @@ app.use("/api/message", messageRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/notification", notificationRouter);
 app.use("/api/workout-session", workoutRouter);
+app.use("/api/workouts", workoutRouter);
 
 await connectDb();
 
