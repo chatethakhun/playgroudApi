@@ -96,3 +96,44 @@ export const getSingleWorkoutSession = async (req, res) => {
     res.status(500).send(error);
   }
 };
+
+export const addWorkoutSet = async (req, res) => {
+  try {
+    const workoutSession = await WorkoutSession.findById(req.params.id);
+
+    if (!workoutSession) {
+      res.status(404).send("Workout session not found");
+      return;
+    }
+
+    const workoutSet = await new WorkoutSession.WorkoutSet({
+      workoutSessionId: workoutSession._id,
+      title: req.body.title,
+      exercises: req.body.exercises,
+      startedAt: new Date(),
+    }).save();
+
+    res.status(201).json({
+      workoutSet,
+    });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+export const deleteWorkoutSet = async (req, res) => {
+  try {
+    const workoutSet = await WorkoutSession.WorkoutSet.findById(req.params.id);
+
+    if (!workoutSet) {
+      res.status(404).send("Workout set not found");
+      return;
+    }
+
+    await workoutSet.remove();
+
+    res.status(200).send("Workout set deleted");
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
