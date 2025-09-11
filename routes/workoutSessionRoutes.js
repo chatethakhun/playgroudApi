@@ -5,6 +5,7 @@ import {
   getListWorkoutSession,
   deleteWorkoutSession,
   getSingleWorkoutSession,
+  addWorkoutSet,
 } from "../controllers/workoutSessionController.js";
 import { protectedRoute } from "../middleware/auth.js";
 
@@ -15,5 +16,6 @@ workoutSessionRouter.get("/:id", protectedRoute, getSingleWorkoutSession);
 workoutSessionRouter.post("/start", protectedRoute, startWorkoutSession);
 workoutSessionRouter.put("/end/:id", protectedRoute, endWorkoutSession);
 workoutSessionRouter.delete("/:id", protectedRoute, deleteWorkoutSession);
+workoutSessionRouter.post("/addworkoutSet", protectedRoute, addWorkoutSet);
 
 export default workoutSessionRouter;

@@ -107,16 +107,15 @@ export const addWorkoutSet = async (req, res) => {
     }
 
     const workoutSet = await new WorkoutSession.WorkoutSet({
-      workoutSessionId: workoutSession._id,
-      title: req.body.title,
-      exercises: req.body.exercises,
-      startedAt: new Date(),
+      sessionId: workoutSession._id,
+      workoutId: req.body.workoutId,
     }).save();
 
     res.status(201).json({
       workoutSet,
     });
   } catch (error) {
+    console.log("error from addWorkoutSet", error);
     res.status(500).send(error);
   }
 };

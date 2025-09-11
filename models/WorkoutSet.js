@@ -11,14 +11,6 @@ const workoutSetSchema = new mongoose.Schema({
     ref: "Workout",
     required: true,
   },
-  sets: {
-    type: Number,
-    required: true,
-  },
-  reps: {
-    type: Number,
-    required: true,
-  },
 });
 
 export default mongoose.model("WorkoutSet", workoutSetSchema);
