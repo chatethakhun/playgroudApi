@@ -45,6 +45,7 @@ export const getSingleWorkout = async (req, res) => {
       workout,
     });
   } catch (error) {
+    console.log("error from getSingleWorkout", error);
     res.status(500).send(error);
   }
 };
@@ -64,6 +65,7 @@ export const updateWorkout = async (req, res) => {
       workout,
     });
   } catch (error) {
+    console.log("error from updateWorkout", error);
     res.status(500).send(error);
   }
 };
@@ -81,6 +83,7 @@ export const deleteWorkout = async (req, res) => {
 
     res.status(200).send("Workout deleted");
   } catch (error) {
+    console.log("error from deleteWorkout", error);
     res.status(500).send(error);
   }
 };
