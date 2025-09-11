@@ -27,7 +27,7 @@ const workoutSessionSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  workoutSet: { type: [workoutSetSchema], default: [] },
+  workoutSets: { type: [workoutSetSchema], default: [] },
 });
 
 export default mongoose.model("WorkoutSession", workoutSessionSchema);

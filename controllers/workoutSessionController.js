@@ -85,11 +85,12 @@ export const getSingleWorkoutSession = async (req, res) => {
   try {
     // find and joint with workout set to get workout
 
-    const workoutSession = await WorkoutSession.findById(
-      req.params.id,
-    ).populate({
-      path: "workoutSet.sessionId",
-    });
+    const workoutSession = await WorkoutSession.findById(req.params.id)
+      .populate({
+        path: "workoutSets.workoutId",
+      })
+
+      .lean({ virtuals: true });
 
     if (!workoutSession) {
       res.status(404).send("Workout session not found");
@@ -114,13 +115,13 @@ export const addWorkoutSet = async (req, res) => {
       return;
     }
 
-    const workoutSet = await new WorkoutSet({
-      sessionId: workoutSession._id,
+    workoutSession.workoutSets.push({
       workoutId: req.body.workoutId,
-    }).save();
-
+    });
+    console.log({ workoutSession });
+    await workoutSession.save();
     res.status(201).json({
-      workoutSet,
+      workoutSession,
     });
   } catch (error) {
     console.log("error from addWorkoutSet", error);
