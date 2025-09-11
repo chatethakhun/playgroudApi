@@ -16,6 +16,6 @@ workoutSessionRouter.get("/:id", protectedRoute, getSingleWorkoutSession);
 workoutSessionRouter.post("/start", protectedRoute, startWorkoutSession);
 workoutSessionRouter.put("/end/:id", protectedRoute, endWorkoutSession);
 workoutSessionRouter.delete("/:id", protectedRoute, deleteWorkoutSession);
-workoutSessionRouter.post("/addworkoutSet", protectedRoute, addWorkoutSet);
+workoutSessionRouter.post("/:id/addworkoutSet", protectedRoute, addWorkoutSet);
 
 export default workoutSessionRouter;
