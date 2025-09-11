@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const workoutSetSchema = new mongoose.Schema({
+export const workoutSetSchema = new mongoose.Schema({
   sessionId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "WorkoutSession",

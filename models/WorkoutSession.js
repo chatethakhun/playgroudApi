@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import WorkoutSet from "./WorkoutSet.js";
+import WorkoutSet, { workoutSetSchema } from "./WorkoutSet.js";
 
 const workoutSessionSchema = new mongoose.Schema({
   title: {
@@ -27,7 +27,7 @@ const workoutSessionSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  workoutSet: { type: [WorkoutSet], default: [] },
+  workoutSet: { type: [workoutSetSchema], default: [] },
 });
 
 export default mongoose.model("WorkoutSession", workoutSessionSchema);
