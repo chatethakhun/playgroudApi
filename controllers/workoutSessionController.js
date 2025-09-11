@@ -85,8 +85,14 @@ export const getSingleWorkoutSession = async (req, res) => {
   try {
     // find and joint with workout set to get workout
 
-    const workoutSession = await WorkoutSession.findById(req.params.id);
-    const workoutSet = await WorkoutSet.find({ sessionId: workoutSession._id });
+    const workoutSession = await WorkoutSession.findById(
+      req.params.id,
+    ).populate({
+      path: "workoutSet",
+      populate: {
+        path: "workout",
+      },
+    });
 
     if (!workoutSession) {
       res.status(404).send("Workout session not found");
@@ -95,7 +101,6 @@ export const getSingleWorkoutSession = async (req, res) => {
 
     res.status(200).json({
       workoutSession,
-      workoutSet,
     });
   } catch (error) {
     res.status(500).send(error);
