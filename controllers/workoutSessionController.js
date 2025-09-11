@@ -111,7 +111,7 @@ export const addWorkoutSet = async (req, res) => {
       return;
     }
 
-    const workoutSet = await new WorkoutSession.WorkoutSet({
+    const workoutSet = await new WorkoutSet({
       sessionId: workoutSession._id,
       workoutId: req.body.workoutId,
     }).save();
