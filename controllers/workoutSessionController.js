@@ -1,4 +1,5 @@
 import WorkoutSession from "../models/WorkoutSession.js";
+import WorkoutSet from "../models/WorkoutSet.js";
 
 export const getListWorkoutSession = async (req, res) => {
   try {
@@ -82,7 +83,10 @@ export const deleteWorkoutSession = async (req, res) => {
 
 export const getSingleWorkoutSession = async (req, res) => {
   try {
+    // find and joint with workout set to get workout
+
     const workoutSession = await WorkoutSession.findById(req.params.id);
+    const workoutSet = await WorkoutSet.find({ sessionId: workoutSession._id });
 
     if (!workoutSession) {
       res.status(404).send("Workout session not found");
@@ -91,6 +95,7 @@ export const getSingleWorkoutSession = async (req, res) => {
 
     res.status(200).json({
       workoutSession,
+      workoutSet,
     });
   } catch (error) {
     res.status(500).send(error);
