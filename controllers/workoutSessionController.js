@@ -88,7 +88,7 @@ export const getSingleWorkoutSession = async (req, res) => {
     const workoutSession = await WorkoutSession.findById(
       req.params.id,
     ).populate({
-      path: "workoutSet",
+      path: "workoutSet.sessionId",
     });
 
     if (!workoutSession) {
