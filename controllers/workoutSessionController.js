@@ -89,9 +89,6 @@ export const getSingleWorkoutSession = async (req, res) => {
       req.params.id,
     ).populate({
       path: "workoutSet",
-      populate: {
-        path: "workout",
-      },
     });
 
     if (!workoutSession) {
@@ -103,6 +100,7 @@ export const getSingleWorkoutSession = async (req, res) => {
       workoutSession,
     });
   } catch (error) {
+    console.log("error from getSingleWorkoutSession", error);
     res.status(500).send(error);
   }
 };

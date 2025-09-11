@@ -26,6 +26,12 @@ const workoutSessionSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  workoutSet: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "WorkoutSet",
+    },
+  ],
 });
 
 export default mongoose.model("WorkoutSession", workoutSessionSchema);
