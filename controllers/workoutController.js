@@ -72,14 +72,7 @@ export const updateWorkout = async (req, res) => {
 
 export const deleteWorkout = async (req, res) => {
   try {
-    const workout = await Workout.findById(req.params.id);
-
-    if (!workout) {
-      res.status(404).send("Workout not found");
-      return;
-    }
-
-    await workout.remove();
+    const workout = await Workout.deleteOne({ _id: req.params.id });
 
     res.status(200).send("Workout deleted");
   } catch (error) {
