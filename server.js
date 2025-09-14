@@ -16,6 +16,7 @@ import notificationRouter from "./routes/notificationRoutes.js";
 import WS_EVENT from "./constant/wsEvent.js";
 import workoutSessionRouter from "./routes/workoutSessionRoutes.js";
 import workOutRouter from "./routes/workoutRoutes.js";
+import colorRouter from "./routes/colorRoutes.js";
 
 // initial socket connection
 export const io = new Server(server, {
@@ -70,6 +71,7 @@ app.use("/api/users", usersRouter);
 app.use("/api/notification", notificationRouter);
 app.use("/api/workout-session", workoutSessionRouter);
 app.use("/api/workouts", workOutRouter);
+app.use("/api/colors", colorRouter);
 
 await connectDb();
 
