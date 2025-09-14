@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import mongooseAutoPopulate from "mongoose-autopopulate";
 
 const userSchema = new mongoose.Schema(
   {
@@ -26,6 +27,7 @@ const userSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
+userSchema.plugin(mongooseAutoPopulate);
 const User = mongoose.model("User", userSchema);
 
 export default User;

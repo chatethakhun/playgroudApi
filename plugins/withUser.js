@@ -5,6 +5,7 @@ export default function withUser(schema) {
       ref: "User",
       required: true,
       index: true,
+      autopopulate: true,
     },
   });
 

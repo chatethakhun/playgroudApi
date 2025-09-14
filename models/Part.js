@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import withUser from "../plugins/withUser.js";
+import mongooseAutoPopulate from "mongoose-autopopulate";
 
 const PartRequirementSchema = new mongoose.Schema(
   {
@@ -7,6 +8,7 @@ const PartRequirementSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Runner",
       required: true,
+      autopopulate: true,
     },
     gate: { type: String, required: true },
     qty: { type: Number, default: 1, min: 1 },
@@ -21,12 +23,14 @@ const PartSchema = new mongoose.Schema(
       ref: "Kit",
       required: true,
       index: true,
+      autopopulate: true,
     },
     subassembly: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Subassembly",
       required: true,
       index: true,
+      autopopulate: true,
     },
     code: { type: String },
     name: { type: String, required: true },
@@ -35,7 +39,7 @@ const PartSchema = new mongoose.Schema(
   },
   { timestamps: true },
 );
-
+PartSchema.plugin(mongooseAutoPopulate);
 PartSchema.plugin(withUser);
 PartSchema.index(
   { user: 1, kit: 1, subassembly: 1, name: 1 },

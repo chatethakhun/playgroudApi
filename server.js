@@ -18,7 +18,8 @@ import workoutSessionRouter from "./routes/workoutSessionRoutes.js";
 import workOutRouter from "./routes/workoutRoutes.js";
 import colorRouter from "./routes/colorRoutes.js";
 import kitRouter from "./routes/kitRoutes.js";
-
+import partRouter from "./routes/partRoutes.js";
+import subassembliesRouter from "./routes/subassembliesRoutes.js";
 // initial socket connection
 export const io = new Server(server, {
   cors: {
@@ -74,6 +75,8 @@ app.use("/api/workout-session", workoutSessionRouter);
 app.use("/api/workouts", workOutRouter);
 app.use("/api/colors", colorRouter);
 app.use("/api/kits", kitRouter);
+app.use("/api/parts", partRouter);
+app.use("/api/subassemblies", subassembliesRouter);
 
 app.use((req, res, next) => {
   res.status(404).json({ error: "Not found" });

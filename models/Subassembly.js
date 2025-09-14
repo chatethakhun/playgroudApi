@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import withUser from "../plugins/withUser.js";
+import mongooseAutoPopulate from "mongoose-autopopulate";
 
 const SubassemblySchema = new mongoose.Schema(
   {
@@ -8,6 +9,7 @@ const SubassemblySchema = new mongoose.Schema(
       ref: "Kit",
       required: true,
       index: true,
+      autopopulate: true,
     },
     key: { type: String, required: true },
     name: { type: String, required: true },
@@ -16,6 +18,7 @@ const SubassemblySchema = new mongoose.Schema(
   { timestamps: true },
 );
 
+SubassemblySchema.plugin(mongooseAutoPopulate);
 SubassemblySchema.plugin(withUser);
 SubassemblySchema.index({ user: 1, kit: 1, key: 1 }, { unique: true });
 
