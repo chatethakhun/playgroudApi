@@ -9,9 +9,7 @@ const KitSchema = new mongoose.Schema(
       enum: ["EG", "HG", "RG", "MG", "PG", "Other"],
       required: true,
     },
-    scale: { type: Number, required: true },
-    manufacturer: { type: String, default: "Bandai" },
-    releaseYear: { type: Number },
+    manufacturer: { type: String },
   },
   { timestamps: true },
 );

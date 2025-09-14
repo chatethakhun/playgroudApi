@@ -17,6 +17,7 @@ import WS_EVENT from "./constant/wsEvent.js";
 import workoutSessionRouter from "./routes/workoutSessionRoutes.js";
 import workOutRouter from "./routes/workoutRoutes.js";
 import colorRouter from "./routes/colorRoutes.js";
+import kitRouter from "./routes/kitRoutes.js";
 
 // initial socket connection
 export const io = new Server(server, {
@@ -72,6 +73,11 @@ app.use("/api/notification", notificationRouter);
 app.use("/api/workout-session", workoutSessionRouter);
 app.use("/api/workouts", workOutRouter);
 app.use("/api/colors", colorRouter);
+app.use("/api/kits", kitRouter);
+
+app.use((req, res, next) => {
+  res.status(404).json({ error: "Not found" });
+});
 
 await connectDb();
 
