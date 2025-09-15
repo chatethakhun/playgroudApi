@@ -12,6 +12,7 @@ const PartRequirementSchema = new mongoose.Schema(
     },
     gate: { type: String, required: true },
     qty: { type: Number, default: 1, min: 1 },
+    isCut: { type: Boolean, default: false },
   },
   { _id: false },
 );
