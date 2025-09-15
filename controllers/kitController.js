@@ -13,6 +13,12 @@ export const createKit = async (req, res) => {
 };
 
 export const getKits = async (req, res) => {
+  const { isFinished } = req.query;
+  if (isFinished) {
+    const kits = await Kit.find({ isFinished: true }).forUser(req.user.id);
+    res.json(kits);
+    return;
+  }
   const kits = await Kit.find().forUser(req.user.id).lean();
   res.json(kits);
 };

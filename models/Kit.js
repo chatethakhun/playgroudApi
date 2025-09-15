@@ -6,10 +6,11 @@ const KitSchema = new mongoose.Schema(
     name: { type: String, required: true },
     grade: {
       type: String,
-      enum: ["EG", "HG", "RG", "MG", "PG", "Other"],
+      enum: ["EG", "HG", "RG", "MG", "PG", "Other", "MGSD"],
       required: true,
     },
     manufacturer: { type: String },
+    isFinished: { type: Boolean, default: false },
   },
   { timestamps: true },
 );
