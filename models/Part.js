@@ -34,6 +34,7 @@ const PartSchema = new mongoose.Schema(
     },
     code: { type: String },
     requires: [PartRequirementSchema],
+    isCut: { type: Boolean, default: false },
     paints: [{ type: mongoose.Schema.Types.ObjectId, ref: "Paint" }],
   },
   { timestamps: true },
