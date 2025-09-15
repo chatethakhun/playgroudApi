@@ -33,7 +33,6 @@ const PartSchema = new mongoose.Schema(
       autopopulate: true,
     },
     code: { type: String },
-    name: { type: String, required: true },
     requires: [PartRequirementSchema],
     paints: [{ type: mongoose.Schema.Types.ObjectId, ref: "Paint" }],
   },

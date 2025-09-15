@@ -67,3 +67,43 @@ export const getPart = async (req, res) => {
   if (!part) return res.status(404).json({ error: "Not found" });
   res.json(part);
 };
+
+export const updatePart = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { kit, subassembly, requires = [] } = req.body;
+    await assertOwnership({
+      userId: req.user.id,
+      kitId: kit,
+      subId: subassembly,
+      runnerIds: requires.map((r) => r.runner),
+    });
+
+    const doc = await Part.findOne({ _id: id })
+      .forUser(req.user.id)
+      .populate(partPopulate);
+    if (!doc) return res.status(404).json({ error: "Not found" });
+    await Part.findByIdAndUpdate(id, { $set: req.body });
+    const part = await Part.findById(id)
+      .forUser(req.user.id)
+      .populate(partPopulate)
+      .lean();
+    res.json(part);
+  } catch (e) {
+    res.status(400).json({ error: e.message });
+  }
+};
+
+export const deletePart = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const doc = await Part.findOne({ _id: id })
+      .forUser(req.user.id)
+      .populate(partPopulate);
+    if (!doc) return res.status(404).json({ error: "Not found" });
+    await Part.findByIdAndDelete(id);
+    res.status(204).end();
+  } catch (e) {
+    res.status(400).json({ error: e.message });
+  }
+};
