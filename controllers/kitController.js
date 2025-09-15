@@ -20,6 +20,7 @@ export const getKits = async (req, res) => {
 export const getKit = async (req, res) => {
   const kit = await Kit.findOne({ _id: req.params.id })
     .forUser(req.user.id)
+    .populate({ path: "runners" })
     .lean();
   if (!kit) return res.status(404).json({ error: "Not found" });
   res.json(kit);
@@ -31,15 +32,7 @@ export const createKitRunner = async (req, res) => {
     const kit = await Kit.findOne({ _id: req.params.id }).forUser(req.user.id);
     if (!kit) return res.status(404).json({ error: "Kit not found" });
 
-    const numberOfPieces = req.body.numberOfPieces;
     const runnerPieces = [];
-
-    for (const i of Array(numberOfPieces).keys()) {
-      runnerPieces.push({
-        gate: (i + 1).toString(),
-        label: "Piece " + (i + 1),
-      });
-    }
 
     const runner = await Runner.create({
       ...req.body,

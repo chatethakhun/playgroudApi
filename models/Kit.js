@@ -17,4 +17,11 @@ const KitSchema = new mongoose.Schema(
 KitSchema.plugin(withUser);
 KitSchema.index({ user: 1, name: 1, grade: 1, scale: 1 }, { unique: true });
 
+KitSchema.virtual("runners", {
+  ref: "Runner",
+  localField: "_id",
+  foreignField: "kit",
+  justOne: false,
+});
+
 export const Kit = mongoose.model("Kit", KitSchema);
