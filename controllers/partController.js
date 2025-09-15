@@ -107,3 +107,19 @@ export const deletePart = async (req, res) => {
     res.status(400).json({ error: e.message });
   }
 };
+
+export const updateCutInRequires = async (req, res) => {
+  const { id, idx } = req.params;
+
+  const part = await Part.findOne({ _id: id }).forUser(req.user.id);
+  if (!part) return res.status(404).json({ error: "Part not found" });
+
+  if (!part.requires[idx])
+    return res.status(400).json({ error: "Invalid index" });
+
+  // toggle หรือ set true ก็ได้
+  part.requires[idx].isCut = req.body.isCut ?? true;
+  await part.save();
+
+  res.json(part.requires[idx]);
+};
