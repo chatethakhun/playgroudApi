@@ -58,6 +58,72 @@ export const getKitRunners = async (req, res) => {
     .lean();
   res.json(runners);
 };
+export const getKitRunner = async (req, res) => {
+  const runner = await Runner.findOne({ _id: req.params.runnerId })
+    .forUser(req.user.id)
+    .populate({ path: "color", select: "name code hex" })
+    .lean();
+  if (!runner) return res.status(404).json({ error: "Runner not found" });
+  res.json(runner);
+};
+
+export const updateKitRunner = async (req, res) => {
+  try {
+    const runner = await Runner.findOne({ _id: req.params.id }).forUser(
+      req.user.id,
+    );
+    if (!runner) return res.status(404).json({ error: "Runner not found" });
+
+    const runnerPieces = [];
+
+    await Runner.updateOne(
+      { _id: req.params.id },
+      {
+        ...req.body,
+        pieces: runnerPieces,
+      },
+    );
+    res.status(200).json(runner);
+  } catch (e) {
+    res.status(400).json({ error: e.message });
+  }
+};
+
+export const updateKitRunnerPieces = async (req, res) => {
+  try {
+    const runner = await Runner.findOne({ _id: req.params.id }).forUser(
+      req.user.id,
+    );
+    if (!runner) return res.status(404).json({ error: "Runner not found" });
+
+    const runnerPieces = req.body.pieces;
+
+    await Runner.updateOne(
+      { _id: req.params.id },
+      {
+        ...req.body,
+        pieces: runnerPieces,
+      },
+    );
+    res.status(200).json(runner);
+  } catch (e) {
+    res.status(400).json({ error: e.message });
+  }
+};
+
+export const deleteKitRunner = async (req, res) => {
+  try {
+    const runner = await Runner.findOne({ _id: req.params.id }).forUser(
+      req.user.id,
+    );
+    if (!runner) return res.status(404).json({ error: "Runner not found" });
+
+    await Runner.deleteOne({ _id: req.params.id });
+    res.status(200).json(runner);
+  } catch (e) {
+    res.status(400).json({ error: e.message });
+  }
+};
 
 export const createSubassembly = async (req, res) => {
   try {

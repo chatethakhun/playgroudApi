@@ -8,6 +8,9 @@ import {
   createSubassembly,
   getKitSubassemblies,
   getKitParts,
+  updateKitRunner,
+  deleteKitRunner,
+  getKitRunner,
 } from "../controllers/kitController.js";
 import { protectedRoute } from "../middleware/auth.js";
 
@@ -22,6 +25,12 @@ kitRouter.get("/:id", protectedRoute, getKit);
 kitRouter.post("/:id/runner", protectedRoute, createKitRunner);
 
 kitRouter.get("/:id/runner", protectedRoute, getKitRunners);
+
+kitRouter.get("/:id/runner/:runnerId", protectedRoute, getKitRunner);
+
+kitRouter.put("/:id/runner/:runnerId", protectedRoute, updateKitRunner);
+
+kitRouter.delete("/:id/runner/:runnerId", protectedRoute, deleteKitRunner);
 
 // subassemblies
 kitRouter.post("/:id/subassembly", protectedRoute, createSubassembly);
