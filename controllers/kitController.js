@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { Kit } from "../models/Kit.js";
 import { Part } from "../models/Part.js";
 import { Runner } from "../models/Runner.js";
@@ -142,9 +143,51 @@ export const createSubassembly = async (req, res) => {
 };
 
 export const getKitSubassemblies = async (req, res) => {
-  res.json(
-    await Subassembly.find({ kit: req.params.id }).sort({ order: 1 }).lean(),
-  );
+  const kitId = new mongoose.Types.ObjectId(req.params.id);
+  const userId = new mongoose.Types.ObjectId(req.user.id);
+  const notUsed =
+    String(req.query.notUsedInPart || "").toLowerCase() === "true";
+  // ถ้าไม่ใช้ตัวกรอง ก็คืนรายการปกติ (เดิม)
+  if (!notUsed) {
+    const subs = await Subassembly.find({ kit: kitId })
+      .forUser(userId)
+      .sort({ order: 1 })
+      .lean();
+    return res.json(subs);
+  }
+
+  // ใช้ Aggregation: match subassemblies ของคิทนี้ + ผู้ใช้นี้
+  // แล้ว lookup parts ที่ชี้ subassembly นั้น (ของผู้ใช้นี้ + คิทเดียวกัน)
+  const subs = await Subassembly.aggregate([
+    { $match: { kit: kitId, user: userId } },
+    {
+      $lookup: {
+        from: "parts",
+        let: { subId: "$_id", kitId: "$kit", userId: "$user" },
+        pipeline: [
+          {
+            $match: {
+              $expr: {
+                $and: [
+                  { $eq: ["$subassembly", "$$subId"] },
+                  { $eq: ["$kit", "$$kitId"] },
+                  { $eq: ["$user", "$$userId"] },
+                ],
+              },
+            },
+          },
+          { $limit: 1 }, // พอรู้ว่ามีสักตัวก็พอ ไม่ต้องดึงทั้งหมด
+        ],
+        as: "usedParts",
+      },
+    },
+    // เก็บเฉพาะที่ "ยังไม่ถูกใช้" (ไม่มี part อ้าง subassembly นี้)
+    { $match: { usedParts: { $eq: [] } } },
+    { $project: { usedParts: 0 } },
+    { $sort: { order: 1, _id: 1 } },
+  ]);
+
+  res.json(subs);
 };
 
 export const getKitParts = async (req, res) => {
