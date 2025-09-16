@@ -77,7 +77,7 @@ export const updateKitRunner = async (req, res) => {
     const runnerPieces = [];
 
     await Runner.updateOne(
-      { _id: req.params.id },
+      { _id: req.params.runnerId },
       {
         ...req.body,
         pieces: runnerPieces,
@@ -99,7 +99,7 @@ export const updateKitRunnerPieces = async (req, res) => {
     const runnerPieces = req.body.pieces;
 
     await Runner.updateOne(
-      { _id: req.params.id },
+      { _id: req.params.runnerId },
       {
         ...req.body,
         pieces: runnerPieces,
@@ -113,12 +113,12 @@ export const updateKitRunnerPieces = async (req, res) => {
 
 export const deleteKitRunner = async (req, res) => {
   try {
-    const runner = await Runner.findOne({ _id: req.params.id }).forUser(
+    const runner = await Runner.findOne({ _id: req.params.runnerId }).forUser(
       req.user.id,
     );
     if (!runner) return res.status(404).json({ error: "Runner not found" });
 
-    await Runner.deleteOne({ _id: req.params.id });
+    await Runner.deleteOne({ _id: req.params.runnerId });
     res.status(200).json(runner);
   } catch (e) {
     res.status(400).json({ error: e.message });
