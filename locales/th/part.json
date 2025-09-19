@@ -1,5 +1,17 @@
 {
-  "kit-part": {
-    "title": "พาร์ทกันพลา"
+  "part": {
+    "title": "ส่วนประกอบกันพลา",
+    "form": {
+      "subassembly_label": "ส่วนประกอบ",
+      "subassembly_ph": "กรุณาใส่ส่วนประกอบ",
+      "runners_title": "แผงรันเนอร์",
+      "runners_label": "แผงรันเนอร",
+      "runners_ph": "กรุณาใส่แผงรันเนอร",
+      "gate_label": "Quantity",
+      "gate_ph": "Please enter the quantity",
+      "add_part": "+ แผงรันเนอร",
+      "submit": "Submit",
+      "cancel": "Cancel"
+    }
   }
 }

@@ -1,9 +1,11 @@
 {
-  "subassembly": {
-    "title": "Kit subassembly",
+  "color": {
     "form": {
       "name_label": "Name",
       "name_ph": "Please enter the name",
+      "value": "Value",
+      "color_label": "Color",
+      "color_ph": "Please enter the color",
       "submit": "Submit",
       "cancel": "Cancel"
     }

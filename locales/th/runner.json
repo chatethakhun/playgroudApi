@@ -1,5 +1,16 @@
 {
-  "runners": {
-    "title": "แผงรันเนอร์"
+  "runner": {
+    "title": "แผงรันเนอร์",
+    "qty": "จำนวน",
+    "form": {
+      "code_label": "ชื่อแผงรันเนอร์",
+      "code_ph": "กรุณาใส่ชื่อแผงรันเนอร์",
+      "runner_label": "สีรันเนอร์",
+      "runner_ph": "กรุณาใส่ชื่อสีรันเนอร์",
+      "qty_label": "จำนวน",
+      "qty_ph": "กรุณาใส่จำนวน",
+      "submit": "Submit",
+      "cancel": "Cancel"
+    }
   }
 }

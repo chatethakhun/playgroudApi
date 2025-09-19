@@ -1,0 +1,13 @@
+{
+  "color": {
+    "form": {
+      "name_label": "ชื่อ",
+      "name_ph": "กรุณาใส่ชื่อ",
+      "value": "ค่า",
+      "color_label": "สี",
+      "color_ph": "กรุณาใส่สี",
+      "submit": "ส่ง",
+      "cancel": "ยกเลิก"
+    }
+  }
+}

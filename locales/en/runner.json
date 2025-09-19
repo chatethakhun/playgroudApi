@@ -1,5 +1,16 @@
 {
-  "runners": {
-    "title": "Runners"
+  "runner": {
+    "title": "Runners",
+    "qty": "Quantity",
+    "form": {
+      "code_label": "Code",
+      "code_ph": "Please enter the code",
+      "runner_label": "Name",
+      "runner_ph": "Please enter the name",
+      "qty_label": "Quantity",
+      "qty_ph": "Please enter the quantity",
+      "submit": "Submit",
+      "cancel": "Cancel"
+    }
   }
 }

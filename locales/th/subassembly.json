@@ -1,5 +1,11 @@
 {
-  "kit-subassembly": {
-    "title": "ส่วนประกอบ"
+  "subassembly": {
+    "title": "ส่วนประกอบ",
+    "form": {
+      "name_label": "ชื่อ",
+      "name_ph": "กรุณาใส่ชื่อ",
+      "submit": "Submit",
+      "cancel": "Cancel"
+    }
   }
 }
