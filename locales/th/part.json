@@ -4,12 +4,12 @@
     "form": {
       "subassembly_label": "ส่วนประกอบ",
       "subassembly_ph": "กรุณาใส่ส่วนประกอบ",
-      "runners_title": "แผงรันเนอร์",
-      "runners_label": "แผงรันเนอร",
-      "runners_ph": "กรุณาใส่แผงรันเนอร",
+      "runner_title": "แผงรันเนอร์",
+      "runner_label": "แผงรันเนอร",
+      "runner_ph": "กรุณาใส่แผงรันเนอร์",
       "gate_label": "เลขเกท",
       "gate_ph": "กรุณาเพิ่มเลขเกท. กด Enter เพื่อเพิ่มเลขเกท",
-      "add_part": "+ แผงรันเนอร",
+      "add_part": "+ แผงรันเนอร์",
       "submit": "Submit",
       "cancel": "Cancel"
     }
