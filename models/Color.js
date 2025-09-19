@@ -6,6 +6,7 @@ const ColorSchema = new mongoose.Schema(
     name: { type: String, required: true },
     code: { type: String },
     hex: { type: String },
+    multiple: { type: Boolean, default: false },
   },
   { timestamps: true },
 );
