@@ -1,0 +1,18 @@
+{
+  "new": {
+    "name": "Gunpla Name",
+    "grade": "Gunpla grade"
+  },
+  "list": {
+    "title": "My Kits",
+    "size-kit": "Size",
+    "view-kit": "View",
+    "add-color": "Add Color"
+  },
+  "overview": {
+    "name": "Gunpla Name",
+    "grade": "Gunpla grade",
+    "title": "Overview",
+    "no-runners": "Number of runners"
+  }
+}
