@@ -5,13 +5,17 @@
     "form": {
       "code_label": "Code",
       "code_ph": "Please enter the code",
+      "code_error": "Please enter the code",
       "runner_label": "Name",
-      "runner_ph": "Please enter the name",
+      "runner_ph": "etc A1, A2",
+      "runner_error": "Please enter the name",
       "qty_label": "Quantity",
-      "qty_ph": "Please enter the quantity",
+      "qty_ph": "etc. 1, 2",
+      "qty_error": "Please enter the quantity",
       "submit": "Submit",
       "color_label": "Color",
-      "color_ph": "Please enter the color",
+      "color_ph": "etc. Red, Blue",
+      "color_error": "Please enter the color",
       "cancel": "Cancel"
     }
   }

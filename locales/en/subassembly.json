@@ -3,7 +3,8 @@
     "title": "Kit subassembly",
     "form": {
       "name_label": "Name",
-      "name_ph": "Please enter the name",
+      "name_ph": "etc. Head, Hand",
+      "name_error": "Please enter the name",
       "submit": "Submit",
       "cancel": "Cancel"
     }

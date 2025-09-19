@@ -2,10 +2,12 @@
   "color": {
     "form": {
       "name_label": "Name",
-      "name_ph": "Please enter the name",
+      "name_ph": "Name",
+      "name_error": "Please enter the name",
       "value": "Value",
       "color_label": "Color",
-      "color_ph": "Please enter the color",
+      "color_ph": "color",
+      "color_error": "Please enter the color",
       "submit": "Submit",
       "cancel": "Cancel"
     }
