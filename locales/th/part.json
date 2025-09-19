@@ -7,8 +7,8 @@
       "runners_title": "แผงรันเนอร์",
       "runners_label": "แผงรันเนอร",
       "runners_ph": "กรุณาใส่แผงรันเนอร",
-      "gate_label": "Quantity",
-      "gate_ph": "Please enter the quantity",
+      "gate_label": "เลขเกท",
+      "gate_ph": "กรุณาเพิ่มเลขเกท. กด Enter เพื่อเพิ่มเลขเกท",
       "add_part": "+ แผงรันเนอร",
       "submit": "Submit",
       "cancel": "Cancel"

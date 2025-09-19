@@ -9,6 +9,8 @@
       "runner_ph": "กรุณาใส่ชื่อสีรันเนอร์",
       "qty_label": "จำนวน",
       "qty_ph": "กรุณาใส่จำนวน",
+      "color_label": "สี",
+      "color_ph": "กรุณาใส่สี",
       "submit": "Submit",
       "cancel": "Cancel"
     }

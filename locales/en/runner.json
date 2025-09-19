@@ -10,6 +10,8 @@
       "qty_label": "Quantity",
       "qty_ph": "Please enter the quantity",
       "submit": "Submit",
+      "color_label": "Color",
+      "color_ph": "Please enter the color",
       "cancel": "Cancel"
     }
   }

@@ -4,11 +4,11 @@
     "form": {
       "subassembly_label": "Name",
       "subassembly_ph": "Please enter the name",
-      "runners_title": "Runners",
-      "runners_label": "Runners",
-      "runners_ph": "Please enter the runners",
-      "gate_label": "Quantity",
-      "gate_ph": "Please enter the quantity",
+      "runner_title": "Runners",
+      "runner_label": "Runners",
+      "runner_ph": "Please enter the runners",
+      "gate_label": "Gate",
+      "gate_ph": "Please add the gate. Press Enter to add the gate",
       "add_part": "+ Add part",
       "submit": "Submit",
       "cancel": "Cancel"
