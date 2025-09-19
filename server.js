@@ -20,6 +20,7 @@ import colorRouter from "./routes/colorRoutes.js";
 import kitRouter from "./routes/kitRoutes.js";
 import partRouter from "./routes/partRoutes.js";
 import subassembliesRouter from "./routes/subassembliesRoutes.js";
+import localRouters from "./routes/i18nRoutes.js";
 // initial socket connection
 export const io = new Server(server, {
   cors: {
@@ -65,7 +66,7 @@ app.use(
 app.use("/api/status", (req, res) => {
   res.send("Hello World!");
 });
-
+app.use("/i18n", localRouters);
 app.use("/api/auth", userRouter);
 app.use("/api/file", uploadRouter);
 app.use("/api/message", messageRouter);
