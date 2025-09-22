@@ -196,7 +196,7 @@ export const getKitParts = async (req, res) => {
     .populate({
       path: "requires.runner",
       select: "code color qty",
-      populate: { path: "color", select: "name hex" },
+      populate: { path: "color", select: "name hex multiple code" },
     })
     .lean();
   res.json(parts);
