@@ -55,14 +55,14 @@ export const getKitRunners = async (req, res) => {
   // จำกัดเฉพาะของ user นี้
   const runners = await Runner.find({ kit: req.params.id })
     .forUser(req.user.id)
-    .populate({ path: "color", select: "name code hex" })
+    .populate({ path: "color", select: "name code hex multiple" })
     .lean();
   res.json(runners);
 };
 export const getKitRunner = async (req, res) => {
   const runner = await Runner.findOne({ _id: req.params.runnerId })
     .forUser(req.user.id)
-    .populate({ path: "color", select: "name code hex" })
+    .populate({ path: "color", select: "name code hex multiple" })
     .lean();
   if (!runner) return res.status(404).json({ error: "Runner not found" });
   res.json(runner);
