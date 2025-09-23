@@ -31,10 +31,14 @@ export const updateColor = async (req, res) => {
     if (!color) {
       res.status(404).json({ error: "Color not found" });
     } else {
-      const updatedColor = await Color.findByIdAndUpdate(req.params.id, {
-        ...req.body,
-        user: req.user.id,
-      });
+      const updatedColor = await Color.findByIdAndUpdate(
+        req.params.id,
+        {
+          ...req.body,
+          user: req.user.id,
+        },
+        { new: true, runValidators: true },
+      );
       res.json(updatedColor);
     }
   } catch (e) {
