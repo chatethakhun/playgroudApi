@@ -81,5 +81,9 @@
   "ok-fail": "OK failed",
   "error-success": "Error successfully",
   "error-fail": "Error failed",
-  "remove-confirm": "Are you sure to remove?"
+  "remove-confirm": "Are you sure to remove?",
+  "500-title": "Something went wrong",
+  "500-message": "Sorry, an error occurred. Please try again later",
+  "404-title": "Page not found",
+  "404-message": "Sorry, the page you visited does not exist"
 }
