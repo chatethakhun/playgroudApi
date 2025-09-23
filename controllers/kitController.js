@@ -18,6 +18,7 @@ export const getKits = async (req, res) => {
 
   const kits = await Kit.find({ isFinished: isFinished === "true" })
     .forUser(req.user.id)
+    .populate({ path: "runners" })
     .lean();
   res.json(kits);
 };
