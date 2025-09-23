@@ -1,5 +1,6 @@
 {
   "color": {
+    "clear-color": "Clear",
     "form": {
       "name_label": "Name",
       "name_ph": "Name",
