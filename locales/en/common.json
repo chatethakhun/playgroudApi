@@ -80,5 +80,6 @@
   "ok-success": "OK successfully",
   "ok-fail": "OK failed",
   "error-success": "Error successfully",
-  "error-fail": "Error failed"
+  "error-fail": "Error failed",
+  "remove-confirm": "Are you sure to remove?"
 }
