@@ -12,7 +12,8 @@
       "color_ph": "color",
       "color_error": "Please enter the color",
       "submit": "Submit",
-      "cancel": "Cancel"
+      "cancel": "Cancel",
+      "error": "Name already exists or invalid color. Please try again."
     }
   }
 }
