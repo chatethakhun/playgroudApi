@@ -55,14 +55,14 @@ export const getKitRunners = async (req, res) => {
   // จำกัดเฉพาะของ user นี้
   const runners = await Runner.find({ kit: req.params.id })
     .forUser(req.user.id)
-    .populate({ path: "color", select: "name code hex multiple" })
+    .populate({ path: "color", select: "name code hex multiple clearColor" })
     .lean();
   res.json(runners);
 };
 export const getKitRunner = async (req, res) => {
   const runner = await Runner.findOne({ _id: req.params.runnerId })
     .forUser(req.user.id)
-    .populate({ path: "color", select: "name code hex multiple" })
+    .populate({ path: "color", select: "name code hex multiple clearColor" })
     .lean();
   if (!runner) return res.status(404).json({ error: "Runner not found" });
   res.json(runner);
@@ -196,7 +196,7 @@ export const getKitParts = async (req, res) => {
     .populate({
       path: "requires.runner",
       select: "code color qty",
-      populate: { path: "color", select: "name hex multiple code" },
+      populate: { path: "color", select: "name hex multiple code clearColor" },
     })
     .lean();
   res.json(parts);
