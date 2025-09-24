@@ -67,6 +67,7 @@ export const getKitRunners = async (req, res) => {
   const runners = await Runner.find({ kit: req.params.id })
     .forUser(req.user.id)
     .populate({ path: "color", select: "name code hex multiple clearColor" })
+    .sort({ isCut: 1 })
     .lean();
   res.json(runners);
 };
@@ -74,6 +75,7 @@ export const getKitRunner = async (req, res) => {
   const runner = await Runner.findOne({ _id: req.params.runnerId })
     .forUser(req.user.id)
     .populate({ path: "color", select: "name code hex multiple clearColor" })
+
     .lean();
   if (!runner) return res.status(404).json({ error: "Runner not found" });
   res.json(runner);
