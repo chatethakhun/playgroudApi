@@ -5,7 +5,6 @@ import {
   updateProfile,
   checkAuth,
   updateAvatar,
-  changePassword,
 } from "../controllers/userController.js";
 import { protectedRoute } from "../middleware/auth.js";
 
