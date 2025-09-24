@@ -2,6 +2,8 @@
   "runner": {
     "title": "Runners",
     "qty": "Quantity",
+    "already_cut": "Already cut",
+    "is_not_cut": "Not cut",
     "form": {
       "code_label": "Code",
       "code_ph": "Please enter the code",
