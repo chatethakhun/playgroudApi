@@ -1,0 +1,11 @@
+{
+  "dashboard": {
+    "app_title": "Dashboard",
+    "users": {
+      "title": "Users",
+      "description": "Manage your users"
+    },
+    "title": "Dashboard",
+    "description": "Welcome to your dashboard!"
+  }
+}
