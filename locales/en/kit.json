@@ -18,5 +18,7 @@
     "grade": "Gunpla grade",
     "title": "Overview",
     "no-runners": "Number of runners"
-  }
+  },
+  "tab-1": "Not Finished",
+  "tab-2": "Finished"
 }
