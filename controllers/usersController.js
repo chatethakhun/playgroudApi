@@ -3,7 +3,7 @@ import User from "../models/User.js";
 
 export const getUsers = async (req, res) => {
   try {
-    const users = await User.find({});
+    const users = await User.find({}).select("-password");
 
     res.status(200).json(users);
   } catch (error) {
@@ -45,6 +45,21 @@ export const changePassword = async (req, res) => {
       .json({ message: "Password changed successfully", user: updatedUser });
   } catch (error) {
     console.log(`error from changePassword: ${error.message}`);
+    res.status(400).json({ error: error.message });
+  }
+};
+
+export const getUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id).select("-password");
+
+    if (!user) {
+      return res.status(400).json({ error: "User not found" });
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    console.log(`error from getUser: ${error.message}`);
     res.status(400).json({ error: error.message });
   }
 };
