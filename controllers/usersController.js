@@ -63,3 +63,38 @@ export const getUser = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+
+export const changeRole = async (req, res) => {
+  try {
+    const { role, userId } = req.body;
+
+    const currentUser = await User.findById(req.user.id);
+
+    if (!currentUser) {
+      return res.status(400).json({ error: "Please login" });
+    }
+
+    if (currentUser.role !== "admin") {
+      return res.status(403).json({ error: "Unauthorized" });
+    }
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(400).json({ error: "User not found" });
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { role },
+      { new: true },
+    );
+
+    res
+      .status(200)
+      .json({ message: "Role changed successfully", user: updatedUser });
+  } catch (error) {
+    console.log(`error from changeRole: ${error.message}`);
+    res.status(400).json({ error: error.message });
+  }
+};
