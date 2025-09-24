@@ -32,6 +32,16 @@ export const getKit = async (req, res) => {
   res.json(kit);
 };
 
+export const updateIsFinished = async (req, res) => {
+  const isFinished = req.body.isFinished;
+  const kit = await Kit.findOne({ _id: req.params.id }).forUser(req.user.id);
+  if (!kit) return res.status(404).json({ error: "Kit not found" });
+
+  kit.isFinished = isFinished;
+  await kit.save();
+  res.json(kit);
+};
+
 export const createKitRunner = async (req, res) => {
   try {
     // ตรวจสอบว่า kit เป็นของ user นี้จริง

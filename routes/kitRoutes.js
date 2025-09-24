@@ -11,6 +11,7 @@ import {
   updateKitRunner,
   deleteKitRunner,
   getKitRunner,
+  updateIsFinished,
 } from "../controllers/kitController.js";
 import { protectedRoute } from "../middleware/auth.js";
 
@@ -21,6 +22,8 @@ kitRouter.post("/", protectedRoute, createKit);
 kitRouter.get("/", protectedRoute, getKits);
 
 kitRouter.get("/:id", protectedRoute, getKit);
+
+kitRouter.put("/:id/is-finished", protectedRoute, updateIsFinished);
 
 kitRouter.post("/:id/runner", protectedRoute, createKitRunner);
 
