@@ -13,6 +13,16 @@
         "email": "Email",
         "role": "Role",
         "avatar": "Avatar"
+      },
+      "user": {
+        "change_password_title": "Change Password",
+        "form": {
+          "change_password_success": "Password changed successfully",
+          "password_required": "Password is required",
+          "change_password_label": "Password",
+          "change_password_placeholder": "New Password",
+          "change_password_button": "Change Password"
+        }
       }
     },
     "title": "Dashboard",

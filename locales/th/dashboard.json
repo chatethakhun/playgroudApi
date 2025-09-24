@@ -15,6 +15,16 @@
         "avatar": "รูปภาพ"
       }
     },
+    "user": {
+      "change_password_title": "เปลี่ยนรหัสผ่าน",
+      "form": {
+        "change_password_success": "เปลี่ยนรหัสผ่านสำเร็จ",
+        "password_required": "โปรดระบุรหัสผ่าน",
+        "change_password_label": "รหัสผ่าน",
+        "change_password_placeholder": "รหัสผ่านใหม่",
+        "change_password_button": "เปลี่ยนรหัสผ่าน"
+      }
+    },
     "title": "แดชบอร์ด",
     "description": "ยินดีต้อนรับเข้าสู่แดชบอร์ดของคุณ!"
   }
