@@ -27,6 +27,7 @@ const RunnerSchema = new mongoose.Schema(
     },
     qty: { type: Number, default: 1, min: 1 },
     pieces: [RunnerPieceSchema],
+    isCut: { type: Boolean, default: false },
   },
   { timestamps: true },
 );
