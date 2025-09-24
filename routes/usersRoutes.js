@@ -3,6 +3,7 @@ import {
   changePassword,
   getUsers,
   getUser,
+  changeRole,
 } from "../controllers/usersController.js";
 import { protectedRoute } from "../middleware/auth.js";
 
@@ -13,5 +14,7 @@ usersRouter.get("/", protectedRoute, getUsers);
 usersRouter.get("/:id", protectedRoute, getUser);
 
 usersRouter.put("/change-password", protectedRoute, changePassword);
+
+usersRouter.put("/change-role", protectedRoute, changeRole);
 
 export default usersRouter;
