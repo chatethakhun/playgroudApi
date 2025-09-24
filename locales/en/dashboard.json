@@ -4,6 +4,9 @@
     "users": {
       "title": "Users",
       "description": "Manage your users",
+      "role_admin": "Admin",
+      "role_user": "User",
+      "role_guest": "Guest",
       "table": {
         "id": "ID",
         "fullName": "Full Name",

@@ -4,6 +4,9 @@
     "users": {
       "title": "ผู้ใช้",
       "description": "จัดการผู้ใช้ของคุณ",
+      "role_admin": "ผู้ดูแลระบบ",
+      "role_user": "ผู้ใช้",
+      "role_guest": "ผู้เยี่ยมชม",
       "table": {
         "id": "ไอดี",
         "fullName": "ชื่อ",
