@@ -124,14 +124,18 @@ export const deletePart = async (req, res) => {
 export const updateCutInRequires = async (req, res) => {
   const { id, runnerId } = req.params;
 
-  const part = await Part.findOne({ _id: id })
-    .forUser(req.user.id)
-    .populate("requires.runner");
+  const part = await Part.findOne({ _id: id }).forUser(req.user.id);
+
   if (!part) return res.status(404).json({ error: "Part not found" });
 
   // toggle หรือ set true ก็ได้
-  console.log({ part: part.requires.map((r) => r.runner._id), runnerId });
-  const runnerParts = part.requires.find((r) => r.runner._id === runnerId);
+  console.log({
+    part: part.requires.map((r) => String(r.runner._id)),
+    runnerId,
+  });
+  const runnerParts = part.requires.find(
+    (r) => String(r.runner._id) === runnerId,
+  );
 
   console.log({ runnerParts });
   if (!runnerParts) return res.status(404).json({ error: "Runner not found" });
