@@ -143,5 +143,5 @@ export const updateCutInRequires = async (req, res) => {
 
   await part.save();
 
-  res.json(part.requires[idx]);
+  res.json(runnerParts);
 };
