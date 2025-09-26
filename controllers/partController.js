@@ -128,7 +128,7 @@ export const updateCutInRequires = async (req, res) => {
   if (!part) return res.status(404).json({ error: "Part not found" });
 
   // toggle หรือ set true ก็ได้
-  console.log({ part: part.requires });
+  console.log({ part: JSON.stringify(part.requires) });
   const runnerParts = part.requires.find((r) => r.runner._id === runnerId);
 
   console.log({ runnerParts });
