@@ -307,5 +307,4 @@ export const getKitParts = async (req, res) => {
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
-  res.json(parts);
 };
