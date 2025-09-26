@@ -209,9 +209,9 @@ export const getKitParts = async (req, res) => {
     .populate({ path: "subassembly", select: "key name order" })
     .populate({
       path: "requires.runner",
-      select: "code color qty",
       populate: { path: "color", select: "name hex multiple code clearColor" },
     })
+    .sort({ isCut: 1, code: 1 })
     .lean();
   res.json(parts);
 };
