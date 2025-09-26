@@ -211,7 +211,7 @@ export const getKitParts = async (req, res) => {
       path: "requires.runner",
       populate: { path: "color", select: "name hex multiple code clearColor" },
     })
-    .sort({ isCut: 1, code: 1 })
+    .sort({ "requires.runner.code": 1 })
     .lean();
   res.json(parts);
 };
