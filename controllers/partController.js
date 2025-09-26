@@ -127,9 +127,6 @@ export const updateCutInRequires = async (req, res) => {
   const part = await Part.findOne({ _id: id }).forUser(req.user.id);
   if (!part) return res.status(404).json({ error: "Part not found" });
 
-  if (!part.requires[idx])
-    return res.status(400).json({ error: "Invalid index" });
-
   // toggle หรือ set true ก็ได้
   console.log({ part: part.requires });
   const runnerParts = part.requires.find((r) => r.runner === runnerId);
