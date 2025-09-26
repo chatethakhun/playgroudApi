@@ -124,7 +124,9 @@ export const deletePart = async (req, res) => {
 export const updateCutInRequires = async (req, res) => {
   const { id, runnerId } = req.params;
 
-  const part = await Part.findOne({ _id: id }).forUser(req.user.id);
+  const part = await Part.findOne({ _id: id })
+    .forUser(req.user.id)
+    .populate("requires.runner");
   if (!part) return res.status(404).json({ error: "Part not found" });
 
   // toggle หรือ set true ก็ได้
