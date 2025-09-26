@@ -205,14 +205,97 @@ export const getKitSubassemblies = async (req, res) => {
 };
 
 export const getKitParts = async (req, res) => {
-  const parts = await Part.find({ kit: req.params.id })
-    .populate({ path: "subassembly", select: "key name order" })
-    .populate({
-      path: "requires.runner",
-      options: { sort: { code: 1 } },
-      populate: { path: "color", select: "name hex multiple code clearColor" },
-    })
+  const kitId = new mongoose.Types.ObjectId(req.params.id);
+  const userId = new mongoose.Types.ObjectId(req.user.id);
+  const parts = await Part.aggregate([
+    { $match: { kit: kitId, user: userId } },
 
-    .lean();
+    // เติม subassembly
+    {
+      $lookup: {
+        from: "subassemblies",
+        localField: "subassembly",
+        foreignField: "_id",
+        as: "subassembly",
+      },
+    },
+    { $unwind: { path: "$subassembly", preserveNullAndEmptyArrays: true } },
+
+    // แตก requires ทีละแถว
+    { $unwind: { path: "$requires", preserveNullAndEmptyArrays: true } },
+
+    // join runner ของ requires.runner
+    {
+      $lookup: {
+        from: "runners",
+        localField: "requires.runner",
+        foreignField: "_id",
+        as: "runner",
+      },
+    },
+    { $unwind: { path: "$runner", preserveNullAndEmptyArrays: true } },
+
+    // join color ของ runner
+    {
+      $lookup: {
+        from: "colors",
+        localField: "runner.color",
+        foreignField: "_id",
+        as: "runnerColor",
+      },
+    },
+    { $unwind: { path: "$runnerColor", preserveNullAndEmptyArrays: true } },
+
+    // เรียงตาม runner.code
+    { $sort: { "runner.code": 1 } },
+
+    // รวมกลับเป็นเอกสารเดิม พร้อม requires ที่เรียงแล้ว
+    {
+      $group: {
+        _id: "$_id",
+        doc: { $first: "$$ROOT" },
+        requires: {
+          $push: {
+            runner: {
+              _id: "$runner._id",
+              code: "$runner.code",
+              qty: "$runner.qty",
+              color: {
+                _id: "$runnerColor._id",
+                name: "$runnerColor.name",
+                hex: "$runnerColor.hex",
+                code: "$runnerColor.code",
+                multiple: "$runnerColor.multiple",
+                clearColor: "$runnerColor.clearColor",
+              },
+            },
+            gate: "$doc.requires.gate",
+            qty: "$doc.requires.qty",
+            isCut: "$doc.requires.isCut",
+          },
+        },
+      },
+    },
+
+    // จัดรูปให้อ่านง่าย
+    {
+      $project: {
+        _id: 1,
+        kit: "$doc.kit",
+        name: "$doc.name",
+        code: "$doc.code",
+        subassembly: {
+          _id: "$doc.subassembly._id",
+          key: "$doc.subassembly.key",
+          name: "$doc.subassembly.name",
+          order: "$doc.subassembly.order",
+        },
+        requires: 1,
+        paints: "$doc.paints",
+        createdAt: "$doc.createdAt",
+        updatedAt: "$doc.updatedAt",
+      },
+    },
+  ]);
   res.json(parts);
 };
