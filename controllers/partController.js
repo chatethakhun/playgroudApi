@@ -31,6 +31,17 @@ async function assertOwnership({ userId, kitId, subId, runnerIds = [] }) {
   }
 }
 
+const sortRunnersByCharacter = (runners) => {
+  const characters = new Set(runners.map((r) => r.character));
+  return runners.sort((a, b) => {
+    const aChar = characters.has(a.character);
+    const bChar = characters.has(b.character);
+    if (aChar && !bChar) return -1;
+    if (!aChar && bChar) return 1;
+    return 0;
+  });
+};
+
 export const createPart = async (req, res) => {
   try {
     const { kit, subassembly, requires = [] } = req.body;
@@ -38,7 +49,7 @@ export const createPart = async (req, res) => {
       userId: req.user.id,
       kitId: kit,
       subId: subassembly,
-      runnerIds: requires.map((r) => r.runner),
+      runnerIds: sortRunnersByCharacter(requires).map((r) => r.runner),
     });
 
     const doc = await Part.create({ ...req.body, user: req.user.id });
