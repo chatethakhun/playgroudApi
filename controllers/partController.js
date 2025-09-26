@@ -94,7 +94,9 @@ export const updatePart = async (req, res) => {
       .forUser(req.user.id)
       .populate(partPopulate);
     if (!doc) return res.status(404).json({ error: "Not found" });
-    await Part.findByIdAndUpdate(id, { $set: req.body });
+    const payload = { ...req.body, user: req.user.id };
+
+    await Part.findByIdAndUpdate(id, { $set: payload });
     const part = await Part.findById(id)
       .forUser(req.user.id)
       .populate(partPopulate)
@@ -120,7 +122,7 @@ export const deletePart = async (req, res) => {
 };
 
 export const updateCutInRequires = async (req, res) => {
-  const { id, idx } = req.params;
+  const { id, runnerId } = req.params;
 
   const part = await Part.findOne({ _id: id }).forUser(req.user.id);
   if (!part) return res.status(404).json({ error: "Part not found" });
@@ -129,7 +131,13 @@ export const updateCutInRequires = async (req, res) => {
     return res.status(400).json({ error: "Invalid index" });
 
   // toggle หรือ set true ก็ได้
-  part.requires[idx].isCut = req.body.isCut ?? true;
+  console.log({ part: part.requires });
+  const runnerParts = part.requires.find((r) => r.runner === runnerId);
+
+  console.log({ runnerParts });
+  if (!runnerParts) return res.status(400).json({ error: "Runner not found" });
+  runnerParts.isCut = req.body.isCut ?? true;
+
   await part.save();
 
   res.json(part.requires[idx]);
