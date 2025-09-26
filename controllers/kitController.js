@@ -64,10 +64,11 @@ export const createKitRunner = async (req, res) => {
 
 export const getKitRunners = async (req, res) => {
   // จำกัดเฉพาะของ user นี้
+  // sort with is cut and runner name
   const runners = await Runner.find({ kit: req.params.id })
     .forUser(req.user.id)
     .populate({ path: "color", select: "name code hex multiple clearColor" })
-    .sort({ isCut: 1 })
+    .sort({ isCut: 1, name: 1 })
     .lean();
   res.json(runners);
 };
