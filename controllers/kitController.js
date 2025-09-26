@@ -205,97 +205,107 @@ export const getKitSubassemblies = async (req, res) => {
 };
 
 export const getKitParts = async (req, res) => {
-  const kitId = new mongoose.Types.ObjectId(req.params.id);
-  const userId = new mongoose.Types.ObjectId(req.user.id);
-  const parts = await Part.aggregate([
-    { $match: { kit: kitId, user: userId } },
+  try {
+    const kitId = new mongoose.Types.ObjectId(req.params.id);
+    const userId = new mongoose.Types.ObjectId(req.user.id);
 
-    // เติม subassembly
-    {
-      $lookup: {
-        from: "subassemblies",
-        localField: "subassembly",
-        foreignField: "_id",
-        as: "subassembly",
+    const parts = await Part.aggregate([
+      // filter ตาม kit + user
+      { $match: { kit: kitId, user: userId } },
+
+      // populate subassembly
+      {
+        $lookup: {
+          from: "subassemblies",
+          localField: "subassembly",
+          foreignField: "_id",
+          as: "subassembly",
+        },
       },
-    },
-    { $unwind: { path: "$subassembly", preserveNullAndEmptyArrays: true } },
+      { $unwind: { path: "$subassembly", preserveNullAndEmptyArrays: true } },
 
-    // แตก requires ทีละแถว
-    { $unwind: { path: "$requires", preserveNullAndEmptyArrays: true } },
+      // แตก requires array
+      { $unwind: { path: "$requires", preserveNullAndEmptyArrays: true } },
 
-    // join runner ของ requires.runner
-    {
-      $lookup: {
-        from: "runners",
-        localField: "requires.runner",
-        foreignField: "_id",
-        as: "runner",
+      // lookup runner
+      {
+        $lookup: {
+          from: "runners",
+          localField: "requires.runner",
+          foreignField: "_id",
+          as: "runner",
+        },
       },
-    },
-    { $unwind: { path: "$runner", preserveNullAndEmptyArrays: true } },
+      { $unwind: { path: "$runner", preserveNullAndEmptyArrays: true } },
 
-    // join color ของ runner
-    {
-      $lookup: {
-        from: "colors",
-        localField: "runner.color",
-        foreignField: "_id",
-        as: "runnerColor",
+      // lookup runner.color
+      {
+        $lookup: {
+          from: "colors",
+          localField: "runner.color",
+          foreignField: "_id",
+          as: "runnerColor",
+        },
       },
-    },
-    { $unwind: { path: "$runnerColor", preserveNullAndEmptyArrays: true } },
+      { $unwind: { path: "$runnerColor", preserveNullAndEmptyArrays: true } },
 
-    // เรียงตาม runner.code
-    { $sort: { "runner.code": 1 } },
+      // sort ตาม runner.code
+      { $sort: { "runner.code": 1 } },
 
-    // รวมกลับเป็นเอกสารเดิม พร้อม requires ที่เรียงแล้ว
-    {
-      $group: {
-        _id: "$_id",
-        doc: { $first: "$$ROOT" },
-        requires: {
-          $push: {
-            runner: {
-              _id: "$runner._id",
-              code: "$runner.code",
-              qty: "$runner.qty",
-              color: {
-                _id: "$runnerColor._id",
-                name: "$runnerColor.name",
-                hex: "$runnerColor.hex",
-                code: "$runnerColor.code",
-                multiple: "$runnerColor.multiple",
-                clearColor: "$runnerColor.clearColor",
+      // group กลับเป็น part เดียว
+      {
+        $group: {
+          _id: "$_id",
+          doc: { $first: "$$ROOT" },
+          requires: {
+            $push: {
+              runner: {
+                _id: "$runner._id",
+                code: "$runner.code",
+                qty: "$runner.qty",
+                isCut: "$runner.isCut",
+                pieces: "$runner.pieces", // ✅ จะมี gate อยู่ในนี้
+                color: {
+                  _id: "$runnerColor._id",
+                  name: "$runnerColor.name",
+                  hex: "$runnerColor.hex",
+                  code: "$runnerColor.code",
+                  multiple: "$runnerColor.multiple",
+                  clearColor: "$runnerColor.clearColor",
+                },
               },
+              gate: "$requires.gate", // จาก Part.requires
+              qty: "$requires.qty",
+              isCut: "$requires.isCut",
             },
-            gate: "$doc.requires.gate",
-            qty: "$doc.requires.qty",
-            isCut: "$doc.requires.isCut",
           },
         },
       },
-    },
 
-    // จัดรูปให้อ่านง่าย
-    {
-      $project: {
-        _id: 1,
-        kit: "$doc.kit",
-        name: "$doc.name",
-        code: "$doc.code",
-        subassembly: {
-          _id: "$doc.subassembly._id",
-          key: "$doc.subassembly.key",
-          name: "$doc.subassembly.name",
-          order: "$doc.subassembly.order",
+      // final shape
+      {
+        $project: {
+          _id: 1,
+          kit: "$doc.kit",
+          name: "$doc.name",
+          code: "$doc.code",
+          subassembly: {
+            _id: "$doc.subassembly._id",
+            key: "$doc.subassembly.key",
+            name: "$doc.subassembly.name",
+            order: "$doc.subassembly.order",
+          },
+          requires: 1,
+          paints: "$doc.paints",
+          createdAt: "$doc.createdAt",
+          updatedAt: "$doc.updatedAt",
         },
-        requires: 1,
-        paints: "$doc.paints",
-        createdAt: "$doc.createdAt",
-        updatedAt: "$doc.updatedAt",
       },
-    },
-  ]);
+    ]);
+
+    res.json(parts);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
   res.json(parts);
 };
