@@ -87,7 +87,7 @@ export const updatePart = async (req, res) => {
       userId: req.user.id,
       kitId: kit,
       subId: subassembly,
-      runnerIds: requires.map((r) => r.runner),
+      runnerIds: sortRunnersByCharacter(requires).map((r) => r.runner),
     });
 
     const doc = await Part.findOne({ _id: id })
