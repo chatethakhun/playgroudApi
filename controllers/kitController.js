@@ -68,7 +68,7 @@ export const getKitRunners = async (req, res) => {
   const runners = await Runner.find({ kit: req.params.id })
     .forUser(req.user.id)
     .populate({ path: "color", select: "name code hex multiple clearColor" })
-    .sort({ isCut: -1, code: 1 })
+    .sort({ isCut: 1, code: 1 })
     .lean();
   res.json(runners);
 };
