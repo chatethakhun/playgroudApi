@@ -204,6 +204,49 @@ export const getKitSubassemblies = async (req, res) => {
   res.json(subs);
 };
 
+export const getKitSubassembly = async (req, res) => {
+  const sub = await Subassembly.findOne({ _id: req.params.id })
+    .forUser(req.user.id)
+    .populate({ path: "kit", select: "name" })
+    .lean();
+  if (!sub) return res.status(404).json({ error: "Subassembly not found" });
+  res.json(sub);
+};
+
+export const updateKitSubassembly = async (req, res) => {
+  try {
+    const sub = await Subassembly.findOne({ _id: req.params.id }).forUser(
+      req.user.id,
+    );
+    if (!sub) return res.status(404).json({ error: "Subassembly not found" });
+
+    const newSub = await Subassembly.updateOne(
+      { _id: req.params.id },
+      {
+        ...req.body,
+      },
+      { new: true },
+    );
+    res.status(200).json(newSub);
+  } catch (e) {
+    res.status(400).json({ error: e.message });
+  }
+};
+
+export const deleteKitSubassembly = async (req, res) => {
+  try {
+    const sub = await Subassembly.findOne({ _id: req.params.id }).forUser(
+      req.user.id,
+    );
+    if (!sub) return res.status(404).json({ error: "Subassembly not found" });
+
+    await Subassembly.deleteOne({ _id: req.params.id });
+    res.status(200).json(sub);
+  } catch (e) {
+    res.status(400).json({ error: e.message });
+  }
+};
+
 export const getKitParts = async (req, res) => {
   try {
     const kitId = new mongoose.Types.ObjectId(req.params.id);

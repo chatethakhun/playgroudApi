@@ -7,6 +7,9 @@ import {
   getKitRunners,
   createSubassembly,
   getKitSubassemblies,
+  getKitSubassembly,
+  updateKitSubassembly,
+  deleteKitSubassembly,
   getKitParts,
   updateKitRunner,
   deleteKitRunner,
@@ -39,6 +42,12 @@ kitRouter.delete("/:id/runner/:runnerId", protectedRoute, deleteKitRunner);
 kitRouter.post("/:id/subassembly", protectedRoute, createSubassembly);
 
 kitRouter.get("/:id/subassembly", protectedRoute, getKitSubassemblies);
+
+kitRouter.get("/:id/subassembly/:id", protectedRoute, getKitSubassembly);
+
+kitRouter.put("/:id/subassembly/:id", protectedRoute, updateKitSubassembly);
+
+kitRouter.delete("/:id/subassembly/:id", protectedRoute, deleteKitSubassembly);
 
 kitRouter.get("/:id/parts", protectedRoute, getKitParts);
 
