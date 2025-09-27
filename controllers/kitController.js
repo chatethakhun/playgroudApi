@@ -299,6 +299,7 @@ export const getKitParts = async (req, res) => {
           paints: "$doc.paints",
           createdAt: "$doc.createdAt",
           updatedAt: "$doc.updatedAt",
+          isCut: "$doc.isCut",
         },
       },
     ]);
