@@ -212,7 +212,8 @@ export const getKitParts = async (req, res) => {
     const parts = await Part.aggregate([
       // filter ตาม kit + user
       { $match: { kit: kitId, user: userId } },
-
+      // sort ตาม createdAt
+      { $sort: { createdAt: 1 } },
       // populate subassembly
       {
         $lookup: {
