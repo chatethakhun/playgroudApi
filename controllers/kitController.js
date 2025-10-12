@@ -19,6 +19,7 @@ export const getKits = async (req, res) => {
   const kits = await Kit.find({ isFinished: isFinished === "true" })
     .forUser(req.user.id)
     .populate({ path: "runners" })
+    .sort({ updatedAt: -1 })
     .lean();
   res.json(kits);
 };
